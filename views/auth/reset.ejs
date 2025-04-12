@@ -5,9 +5,7 @@
 
 <body>
    <%- include('../includes/navigation.ejs', {isAuthenticated: isAuthenticated}) %>
-
     <main>
-        
         <form class="login-form" action="/reset" method="POST">
             <div class="form-control">
                 <label for="title">E-mail</label>
@@ -15,7 +13,6 @@
             </div>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
             <button class="btn" type="submit">Reset Password</button>
-            
         </form>
             <% if (errorMessage && errorMessage.length > 0) { %>
                 <p class="user-msg error-msg"><%= errorMessage %></p>
