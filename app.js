@@ -48,13 +48,15 @@ app.use(async (req, res, next) => {
   }
   User.findById(req.session.userId)
     .then((user) => {
+      if (!user) {
+        return next();
+      }
       req.user = user;
       console.log(user);
       next();
     })
     .catch((err) => {
-      console.log(err);
-      next(new Error("User not found"));
+      throw new Error(err);
     });
 });
 
