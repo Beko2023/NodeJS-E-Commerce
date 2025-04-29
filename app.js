@@ -41,6 +41,7 @@ if (!fs.existsSync(imagesDir)) {
 }
 
 const fileFilter = (req, file, cb) => {
+  console.log("Incoming file MIME type:", file?.mimetype);
   if (
     file.mimetype === "image/png" ||
     file.mimetype === "image/jpg" ||
@@ -48,6 +49,7 @@ const fileFilter = (req, file, cb) => {
   ) {
     cb(null, true);
   } else {
+    console.warn("File rejected by fileFilter:", file.mimetype);
     cb(null, false);
   }
 };
