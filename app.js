@@ -8,6 +8,8 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
 const multer = require("multer");
+const fs = require("fs");
+const imagesDir = path.join(__dirname, "images");
 
 const errorController = require("./controllers/error");
 const User = require("./models/user");
@@ -27,9 +29,16 @@ const fileStorage = multer.diskStorage({
     cb(null, "images");
   },
   filename: (req, file, cb) => {
-    cb(null, new Date().toISOString() + "-" + file.originalname);
+    cb(
+      null,
+      new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname
+    );
   },
 });
+
+if (!fs.existsSync(imagesDir)) {
+  fs.mkdirSync(imagesDir);
+}
 
 const fileFilter = (req, file, cb) => {
   if (
@@ -56,6 +65,7 @@ app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
 );
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(
   session({
     secret: "my secret",
@@ -110,5 +120,9 @@ app.use(errorController.get404);
 mongoose
   .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
+    console.log("MongoDB connection SUCCESS");
     app.listen(3000);
+  })
+  .catch((err) => {
+    console.error("MongoDB connection FAIL", err.message);
   });
