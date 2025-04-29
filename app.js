@@ -68,6 +68,14 @@ app.use(
 app.use(csrfProtection);
 app.use(flash());
 
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; script-src 'self'; connect-src 'self';"
+  );
+  next();
+});
+
 app.use(async (req, res, next) => {
   if (!req.session.userId) {
     return next();
