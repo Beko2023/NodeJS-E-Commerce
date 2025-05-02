@@ -69,6 +69,10 @@ app.use(
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(
+  "/data/invoices",
+  express.static(path.join(__dirname, "data", "invoices"))
+);
+app.use(
   session({
     secret: "my secret",
     resave: false,
@@ -89,21 +93,18 @@ app.use((req, res, next) => {
 });
 
 app.use(async (req, res, next) => {
-  if (!req.session.userId) {
-    return next();
-  }
-  User.findById(req.session.userId)
-    .then((user) => {
-      if (!user) {
-        return next();
-      }
+  if (!req.session.user) return next();
+
+  try {
+    const user = await User.findById(req.session.user._id);
+    if (user) {
       req.user = user;
-      console.log(user);
-      next();
-    })
-    .catch((err) => {
-      throw new Error(err);
-    });
+    }
+    next();
+  } catch (err) {
+    console.error("User fetch error:", err);
+    next(err);
+  }
 });
 
 app.use((req, res, next) => {

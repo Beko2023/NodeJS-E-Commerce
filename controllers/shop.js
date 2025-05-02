@@ -1,5 +1,8 @@
 const Product = require("../models/product");
 const Order = require("../models/order");
+const mongoose = require("mongoose");
+const fs = require("fs");
+const path = require("path");
 
 exports.getProducts = (req, res, next) => {
   Product.find()
@@ -58,17 +61,25 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.postCart = (req, res, next) => {
+  if (!req.user) {
+    console.error("⛔ req.user is undefined in postCart");
+    return res.redirect("/login");
+  }
+
   const prodId = req.body.productId;
   Product.findById(prodId)
     .then((product) => {
       return req.user.addToCart(product);
     })
     .then((result) => {
-      console.log(result);
+      console.log("✅ Added to cart:", result);
       res.redirect("/cart");
+    })
+    .catch((err) => {
+      console.error("🔥 postCart error:", err);
+      next(err);
     });
 };
-
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   req.user
@@ -114,4 +125,16 @@ exports.getOrders = (req, res, next) => {
       });
     })
     .catch((err) => console.log(err));
+};
+
+exports.getInvoice = (req, res, next) => {
+  const orderId = req.params.orderId;
+  const invoiceName = "invoice-" + orderId + ".pdf";
+  const invoicePath = path.join("data", "invoices", invoiceName);
+  fs.readFile(invoicePath, (err, data) => {
+    if (err) {
+      return next(err);
+    }
+    res.send(data);
+  });
 };
