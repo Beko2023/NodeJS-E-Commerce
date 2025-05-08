@@ -107,6 +107,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.json());
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);

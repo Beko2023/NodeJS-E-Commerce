@@ -179,6 +179,7 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.postDeleteProduct = (req, res, next) => {
+  console.log("Received productId:", req.body.productId);
   const prodId = req.body.productId;
   Product.findById(prodId).then((product) => {
     if (!product) {
@@ -188,7 +189,7 @@ exports.postDeleteProduct = (req, res, next) => {
     Product.deleteOne({ _id: prodId, userId: req.user._id })
       .then(() => {
         console.log("DESTROYED PRODUCT");
-        res.redirect("/admin/products");
+        res.json({ success: true });
       })
       .catch((err) => console.log(err));
   });
