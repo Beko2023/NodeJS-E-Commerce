@@ -1,0 +1,43 @@
+0 info it worked if it ends with ok
+1 verbose cli [
+1 verbose cli   'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Users\\mberk\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'client'
+1 verbose cli ]
+2 info using npm@2.15.12
+3 info using node@v22.14.0
+4 verbose run-script [ 'preclient', 'client', 'postclient' ]
+5 info preclient nodejs-complete-guide@1.0.0
+6 info client nodejs-complete-guide@1.0.0
+7 verbose unsafe-perm in lifecycle true
+8 info nodejs-complete-guide@1.0.0 Failed to exec client script
+9 verbose stack Error: nodejs-complete-guide@1.0.0 client: `npm start --prefix client`
+9 verbose stack Exit status 4294963238
+9 verbose stack     at EventEmitter.<anonymous> (C:\Users\mberk\node_modules\npm\lib\utils\lifecycle.js:217:16)
+9 verbose stack     at EventEmitter.emit (node:events:518:28)
+9 verbose stack     at ChildProcess.<anonymous> (C:\Users\mberk\node_modules\npm\lib\utils\spawn.js:24:14)
+9 verbose stack     at ChildProcess.emit (node:events:518:28)
+9 verbose stack     at maybeClose (node:internal/child_process:1101:16)
+9 verbose stack     at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+10 verbose pkgid nodejs-complete-guide@1.0.0
+11 verbose cwd C:\Users\mberk\node_projects\node_project
+12 error Windows_NT 10.0.26100
+13 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\mberk\\node_modules\\npm\\bin\\npm-cli.js" "run" "client"
+14 error node v22.14.0
+15 error npm  v2.15.12
+16 error code ELIFECYCLE
+17 error nodejs-complete-guide@1.0.0 client: `npm start --prefix client`
+17 error Exit status 4294963238
+18 error Failed at the nodejs-complete-guide@1.0.0 client script 'npm start --prefix client'.
+18 error This is most likely a problem with the nodejs-complete-guide package,
+18 error not with npm itself.
+18 error Tell the author that this fails on your system:
+18 error     npm start --prefix client
+18 error You can get information on how to open an issue for this project with:
+18 error     npm bugs nodejs-complete-guide
+18 error Or if that isn't available, you can get their info via:
+18 error
+18 error     npm owner ls nodejs-complete-guide
+18 error There is likely additional logging output above.
+19 verbose exit [ 1, true ]

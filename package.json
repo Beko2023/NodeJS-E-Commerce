@@ -4,13 +4,15 @@
   "description": "Complete Node.js Guide",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
-    "start-server": "node app.js"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Maximilian Schwarzmüller",
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^9.1.2",
     "nodemon": "^1.18.3"
   },
   "dependencies": {
