@@ -1,3 +1,4 @@
+require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -9,6 +10,9 @@ const flash = require("connect-flash");
 const multer = require("multer");
 const fs = require("fs");
 const imagesDir = path.join(__dirname, "images");
+const posId = process.env.PAYU_POS_ID;
+const clientId = process.env.PAYU_CLIENT_ID;
+const apiUrl = process.env.PAYU_API_URL;
 
 const errorController = require("./controllers/error");
 const User = require("./models/user");
