@@ -17,5 +17,9 @@
                 <div class="centered">
                   <h2> Total : <%= totalSum %> </h2>
                 </div>
+                <form class="centered-btn " action="/shop/payu-order" method="POST">
+                    <input type="hidden" name="email" value="<%= user.email %>">
+                    <button type="submit" class="btn">Pay Now</button>
+                </form>
         </main>
         <%- include('../includes/end.ejs') %>

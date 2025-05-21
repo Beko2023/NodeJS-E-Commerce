@@ -23,6 +23,12 @@ form {
   text-align: center;
 }
 
+.centered-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .image {
   height: 20rem;
 }
@@ -206,6 +212,7 @@ form {
   background: white;
   border-radius: 3px;
   cursor: pointer;
+  text-align: center;
 }
 
 .btn:hover,

@@ -1,5 +1,6 @@
 const Product = require("../models/product");
 const Order = require("../models/order");
+const createOrder = require("../services/payu.js");
 const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
@@ -134,10 +135,40 @@ exports.getCheckout = (req, res, next) => {
         path: "/checkout",
         pageTitle: "Checkout",
         products: products,
+        user: user,
         totalSum: total,
       });
     })
     .catch((err) => console.log(err));
+};
+
+exports.postCreatePayment = async (req, res, next) => {
+  try {
+    const orderData = {
+      notifyUrl: "http://localhost:3000",
+      customerIp: req.ip,
+      merchantPostId: process.env.PAYU_CLIENT_ID,
+      description: "Product Purchase",
+      currencyCode: "TRY",
+      totalAmount: "1000",
+      buyer: {
+        email: req.body.email,
+        language: "TR",
+      },
+      products: [
+        {
+          name: "Test Product",
+          unitPrice: "1000",
+          quantity: "1",
+        },
+      ],
+    };
+    const response = await createOrder(orderData);
+    res.status(200).json({ redirectUrl: response.redirectUri });
+  } catch {
+    console.error("Error creating PayU order:", err.message);
+    res.status(500).json({ error: "Failed to initialize payment" });
+  }
 };
 
 exports.postOrder = (req, res, next) => {
