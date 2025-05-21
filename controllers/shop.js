@@ -137,6 +137,7 @@ exports.getCheckout = (req, res, next) => {
         products: products,
         user: user,
         totalSum: total,
+        csrfToken: req.csrfToken(),
       });
     })
     .catch((err) => console.log(err));
@@ -164,8 +165,8 @@ exports.postCreatePayment = async (req, res, next) => {
       ],
     };
     const response = await createOrder(orderData);
-    res.status(200).json({ redirectUrl: response.redirectUri });
-  } catch {
+    res.redirect(response.redirectUri);
+  } catch (err) {
     console.error("Error creating PayU order:", err.message);
     res.status(500).json({ error: "Failed to initialize payment" });
   }
